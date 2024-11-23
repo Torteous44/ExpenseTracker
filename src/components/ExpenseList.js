@@ -1,18 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-function ExpenseList() {
-  // Sample data (replace with data fetched from a backend API later)
-  const [expenses, setExpenses] = useState([
-    { id: 1, amount: 100, category: "Travel", date: "2024-11-15", description: "Flight tickets" },
-    { id: 2, amount: 50, category: "Meals", date: "2024-11-14", description: "Lunch meeting" },
-    { id: 3, amount: 30, category: "Supplies", date: "2024-11-13", description: "Office supplies" },
-  ]);
+function ExpenseList({ loggedInUserId }) {
+  const [expenses, setExpenses] = useState([]); // List of expenses
+  const [filters, setFilters] = useState({ category: "", keyword: "", date: "" }); // Filters for the table
+  const [message, setMessage] = useState(""); // Error or info messages
+  const [loading, setLoading] = useState(false); // Loading state
 
-  const [filters, setFilters] = useState({ category: "", keyword: "", date: "" });
+  useEffect(() => {
+    if (!loggedInUserId) {
+      setMessage("User ID is missing. Please log in to view expenses.");
+      return;
+    }
 
-  const handleDelete = (id) => {
-    setExpenses(expenses.filter((expense) => expense.id !== id));
-  };
+    const fetchExpenses = async () => {
+      setLoading(true);
+      setMessage("");
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_BASE_URL}/showExpenses?user_id=${loggedInUserId}`
+        );
+        
+        // Log the response for debugging
+        console.log("API Response:", response);
+    
+        if (!response.ok) {
+          const errorText = await response.text();
+          setMessage(`Error: ${errorText}`);
+          return;
+        }
+    
+        const data = await response.json(); // This is where the error occurs
+        setExpenses(data);
+      } catch (error) {
+        console.error("Error fetching expenses:", error);
+        setMessage("An error occurred while fetching expenses.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+
+    fetchExpenses();
+  }, [loggedInUserId]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -24,75 +54,83 @@ function ExpenseList() {
 
   const filteredExpenses = expenses.filter((expense) => {
     const matchesCategory =
-      filters.category === "" || expense.category === filters.category;
+      filters.category === "" || expense.category_id === filters.category;
     const matchesKeyword =
       filters.keyword === "" ||
       expense.description.toLowerCase().includes(filters.keyword.toLowerCase());
-    const matchesDate = filters.date === "" || expense.date === filters.date;
+    const matchesDate =
+      filters.date === "" || expense.datetime.startsWith(filters.date);
     return matchesCategory && matchesKeyword && matchesDate;
   });
 
   return (
     <div style={styles.container}>
       <h2>Expense List</h2>
-      <div style={styles.filters}>
-        <select
-          name="category"
-          value={filters.category}
-          onChange={handleFilterChange}
-          style={styles.filterInput}
-        >
-          <option value="">All Categories</option>
-          <option value="Travel">Travel</option>
-          <option value="Meals">Meals</option>
-          <option value="Supplies">Supplies</option>
-        </select>
-        <input
-          type="text"
-          name="keyword"
-          placeholder="Search by keyword"
-          value={filters.keyword}
-          onChange={handleFilterChange}
-          style={styles.filterInput}
-        />
-        <input
-          type="date"
-          name="date"
-          value={filters.date}
-          onChange={handleFilterChange}
-          style={styles.filterInput}
-        />
-      </div>
-      <table style={styles.table}>
-        <thead>
-          <tr>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredExpenses.map((expense) => (
-            <tr key={expense.id}>
-              <td>${expense.amount}</td>
-              <td>{expense.category}</td>
-              <td>{expense.date}</td>
-              <td>{expense.description}</td>
-              <td>
-                <button
-                  onClick={() => handleDelete(expense.id)}
-                  style={styles.deleteButton}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {filteredExpenses.length === 0 && <p style={styles.noData}>No expenses found.</p>}
+      {message && <p style={styles.message}>{message}</p>}
+      {loading && <p>Loading expenses...</p>}
+      {!loading && expenses.length > 0 && (
+        <>
+          <div style={styles.filters}>
+            <select
+              name="category"
+              value={filters.category}
+              onChange={handleFilterChange}
+              style={styles.filterInput}
+            >
+              <option value="">All Categories</option>
+              <option value="1">Travel</option>
+              <option value="2">Meals</option>
+              <option value="3">Supplies</option>
+              {/* Add more categories as needed */}
+            </select>
+            <input
+              type="text"
+              name="keyword"
+              placeholder="Search by keyword"
+              value={filters.keyword}
+              onChange={handleFilterChange}
+              style={styles.filterInput}
+            />
+            <input
+              type="date"
+              name="date"
+              value={filters.date}
+              onChange={handleFilterChange}
+              style={styles.filterInput}
+            />
+          </div>
+          <table style={styles.table}>
+            <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredExpenses.map((expense) => (
+                <tr key={expense.expense_id}>
+                  <td>${expense.amount.toFixed(2)}</td>
+                  <td>{expense.category_id}</td>
+                  <td>{new Date(expense.datetime).toLocaleString()}</td>
+                  <td>{expense.description}</td>
+                  <td>
+                  <Link to={`/expenses/${expense.expense_id}`} state={{ expenseData: expense }} style={styles.editButton}>
+                    Edit
+                  </Link>
+
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+      {!loading && expenses.length === 0 && (
+        <p style={styles.noData}>No expenses found.</p>
+      )}
     </div>
   );
 }
@@ -124,17 +162,21 @@ const styles = {
     borderCollapse: "collapse",
     marginBottom: "20px",
   },
-  deleteButton: {
-    backgroundColor: "#ff4d4f",
+  editButton: {
+    backgroundColor: "#007bff",
     color: "white",
-    border: "none",
     padding: "5px 10px",
     borderRadius: "4px",
+    textDecoration: "none",
     cursor: "pointer",
   },
   noData: {
     textAlign: "center",
     color: "#555",
+  },
+  message: {
+    color: "red",
+    textAlign: "center",
   },
 };
 
