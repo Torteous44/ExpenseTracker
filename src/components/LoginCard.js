@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 
-function LoginCard({ onClose, onLogin }) {
-  const [formData, setFormData] = useState({ username: "", password: "" });
-  const [loading, setLoading] = useState(false);
+function LoginCard({ onClose, onLogin, onSignUp }) {
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [isSigningUp, setIsSigningUp] = useState(false); // Toggle between login and sign-up
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const toggleSignUp = () => {
+    setIsSigningUp((prev) => !prev);
+    setFormData({ email: "", password: "", username: "" }); // Clear form data when switching modes
+    setMessage(""); // Clear messages
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,49 +21,43 @@ function LoginCard({ onClose, onLogin }) {
     e.preventDefault();
     setLoading(true);
     setMessage("");
-  
+
     try {
-      const response = await fetch("https://expensemanager4.azurewebsites.net/logInUser", {
+      const endpoint = isSigningUp
+        ? `${process.env.REACT_APP_API_BASE_URL}/signUpUser`
+        : `${process.env.REACT_APP_API_BASE_URL}/logInUser`;
+
+      const payload = isSigningUp
+        ? { email: formData.email, password: formData.password, username: formData.username }
+        : { email: formData.email, password: formData.password };
+
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: formData.username,
-          password: formData.password,
-        }),
+        body: JSON.stringify(payload),
       });
-  
+
       if (!response.ok) {
         const errorText = await response.text();
-        setMessage(errorText || "Login failed. Please try again.");
+        setMessage(errorText || "Something went wrong. Please try again.");
         return;
       }
-  
-      let result;
-      const contentType = response.headers.get("Content-Type");
-      if (contentType.includes("application/json")) {
-        result = await response.json();
-      } else {
-        result = { message: await response.text() };
+
+      const result = await response.json();
+      setMessage(isSigningUp ? "Account created successfully!" : "Login successful!");
+
+      if (!isSigningUp) {
+        onLogin(result.user_id); // Pass user ID to the parent component
       }
-  
-      setMessage(result.message || "Login successful!");
-      
-      // Pass the user ID to the parent component for further use
-      if (result.user_id) {
-        onLogin(result.user_id); // Pass user ID to parent component
-      } else {
-        console.error("Login successful but user_id missing in response.");
-        setMessage("An unexpected error occurred. Please try again.");
-      }
-  
+
       setTimeout(() => {
-        onClose(); // Close login modal after successful login
+        onClose(); // Close modal after success
       }, 1000);
     } catch (error) {
+      console.error("Error:", error);
       setMessage("A network error occurred. Please try again later.");
-      console.error("Login error:", error);
     } finally {
       setLoading(false);
     }
@@ -65,14 +66,27 @@ function LoginCard({ onClose, onLogin }) {
   return (
     <div style={styles.overlay}>
       <div style={styles.card}>
-        <h2>Login</h2>
+        <h2>{isSigningUp ? "Sign Up" : "Log In"}</h2>
         <form onSubmit={handleSubmit}>
+          {isSigningUp && (
+            <div style={styles.formGroup}>
+              <label>Username:</label>
+              <input
+                type="text"
+                name="username"
+                value={formData.username || ""}
+                onChange={handleChange}
+                required={isSigningUp}
+                style={styles.input}
+              />
+            </div>
+          )}
           <div style={styles.formGroup}>
             <label>Email:</label>
             <input
-              type="text"
-              name="username"
-              value={formData.username}
+              type="email"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
               required
               style={styles.input}
@@ -90,13 +104,19 @@ function LoginCard({ onClose, onLogin }) {
             />
           </div>
           <button type="submit" style={styles.button} disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+            {loading ? (isSigningUp ? "Signing Up..." : "Logging In...") : isSigningUp ? "Sign Up" : "Log In"}
           </button>
         </form>
-        {message && <p style={styles.message}>{message}</p>}
+        <p style={styles.switchText}>
+          {isSigningUp ? "Already have an account? " : "No account? "}
+          <span onClick={toggleSignUp} style={styles.switchLink}>
+            {isSigningUp ? "Log In" : "Sign Up"}
+          </span>
+        </p>
         <button onClick={onClose} style={styles.closeButton}>
           ×
         </button>
+        {message && <p style={styles.message}>{message}</p>}
       </div>
     </div>
   );
@@ -143,6 +163,15 @@ const styles = {
     borderRadius: "4px",
     cursor: "pointer",
     width: "100%",
+  },
+  switchText: {
+    marginTop: "10px",
+    fontSize: "14px",
+  },
+  switchLink: {
+    color: "#007bff",
+    cursor: "pointer",
+    textDecoration: "underline",
   },
   closeButton: {
     position: "absolute",

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
-function NavigationMenu({ toggleLogin, user, onLogout , loggedInUserID }) {
+function NavigationMenu({ toggleLogin, toggleSignUp, user, onLogout, loggedInUserID }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef(null); // Reference for the dropdown menu
 
@@ -51,7 +51,7 @@ function NavigationMenu({ toggleLogin, user, onLogout , loggedInUserID }) {
             onClick={user ? toggleMenu : toggleLogin}
             style={styles.signInButton}
           >
-            {user ? `Hello, ${user}` : "Sign In"}
+            {user ? `Hello, ${user}` : "Sign In / Sign Up"}
           </button>
           {menuOpen && user && (
             <ul style={styles.dropdownMenu}>
@@ -62,6 +62,16 @@ function NavigationMenu({ toggleLogin, user, onLogout , loggedInUserID }) {
                 <Link to="/profile" style={styles.navLink}>
                   View Profile
                 </Link>
+              </li>
+            </ul>
+          )}
+          {!user && menuOpen && (
+            <ul style={styles.dropdownMenu}>
+              <li onClick={toggleLogin} style={styles.dropdownItem}>
+                Log In
+              </li>
+              <li onClick={toggleSignUp} style={styles.dropdownItem}>
+                Sign Up
               </li>
             </ul>
           )}
@@ -117,23 +127,23 @@ const styles = {
     backgroundColor: "white",
     border: "1px solid #ddd",
     borderRadius: "4px",
-    padding: "5px 0", // Reduced padding
+    padding: "5px 0",
     listStyleType: "none",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
     zIndex: "1001",
-    minWidth: "150px", // Minimum width for the dropdown
+    minWidth: "150px",
   },
   dropdownItem: {
-    padding: "8px 15px", // Compact padding for items
+    padding: "8px 15px",
     cursor: "pointer",
-    fontSize: "14px", // Slightly smaller font size
+    fontSize: "14px",
     color: "#007bff",
     backgroundColor: "white",
     textAlign: "left",
-    borderBottom: "1px solid #eee", // Divider between items
+    borderBottom: "1px solid #eee",
   },
   dropdownItemHover: {
-    backgroundColor: "#f1f1f1", // Hover background color
+    backgroundColor: "#f1f1f1",
   },
 };
 
