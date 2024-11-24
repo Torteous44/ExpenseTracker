@@ -105,9 +105,33 @@ function ExpenseList({ loggedInUserId }) {
               style={styles.filterInput}
             >
               <option value="">All Categories</option>
-              <option value="1">Travel</option>
-              <option value="2">Meals</option>
-              <option value="3">Supplies</option>
+              <option value="1">Groceries</option>
+              <option value="2">Restaurants</option>
+              <option value="3">Gas</option>
+              <option value="4">Public Transit</option>
+              <option value="5">Rent</option>
+              <option value="6">Mortgage</option>
+              <option value="7">Utilities</option>
+              <option value="8">Doctor Visits</option>
+              <option value="9">Medications</option>
+              <option value="10">Health Insurance</option>
+              <option value="11">Movies</option>
+              <option value="12">Concerts</option>
+              <option value="13">Clothing</option>
+              <option value="14">Electronics</option>
+              <option value="15">Flights</option>
+              <option value="16">Hotels</option>
+              <option value="17">Tuition</option>
+              <option value="18">Books</option>
+              <option value="19">Car Insurance</option>
+              <option value="20">Home Insurance</option>
+              <option value="21">Haircuts</option>
+              <option value="22">Cosmetics</option>
+              <option value="23">Credit Card Payment</option>
+              <option value="24">Loan Payment</option>
+              <option value="25">Savings Account Deposit</option>
+              <option value="26">Charity Donations</option>
+              <option value="27">Miscellaneous</option>
             </select>
             <input
               type="text"
