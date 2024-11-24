@@ -4,25 +4,32 @@ import { Link } from "react-router-dom";
 const HomePage = ({ user, toggleSignUp }) => {
   return (
     <div style={styles.container}>
-      {/* Hero Section */}
+            <div className="background-shape shape1"></div>
+      <div className="background-shape shape2"></div>
+      <div className="background-shape shape3"></div>
+
       <section style={styles.heroSection}>
-        <h1 style={styles.heroTitle}>Effortlessly Manage Your Expenses</h1>
-        <p style={styles.heroSubtitle}>
-          Take control of your finances with ease and simplicity.
-        </p>
-        <div style={styles.heroButtons}>
-          {!user && (
-            <button onClick={toggleSignUp} style={styles.ctaButton}>
-              Sign Up Now
-            </button>
-          )}
-          {user && (
-            <Link to="/view-expenses" style={styles.ctaButton}>
-              View Expenses
-            </Link>
-          )}
-        </div>
-      </section>
+  <div style={styles.heroBackground}></div> {/* Optional decorative background */}
+  <div style={styles.heroContent}>
+    <h1 style={styles.heroTitle}>Effortlessly Manage Your Expenses</h1>
+    <p style={styles.heroSubtitle}>
+      Take control of your finances with ease and simplicity.
+    </p>
+    <div className="hero-buttons">
+  {!user && (
+    <button onClick={toggleSignUp} className="cta-button">
+      Sign Up Now
+    </button>
+  )}
+  {user && (
+    <Link to="/view-expenses" className="cta-button">
+      View Expenses
+    </Link>
+  )}
+</div>
+
+  </div>
+</section>
 
       {/* Features Section */}
       <section style={styles.featuresSection}>
@@ -158,38 +165,64 @@ const styles = {
   },
   heroSection: {
     display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
     justifyContent: "center",
-    textAlign: "center",
-    padding: "60px 20px",
-    background: "linear-gradient(135deg, #007bff, #0056b3)",
+    alignItems: "center",
+    height: "100vh",
+    background: "linear-gradient(135deg, #0061ff, #60efff)",
     color: "white",
+    textAlign: "center",
+    position: "relative",
+    overflow: "hidden",
+  },
+  heroContent: {
+    zIndex: 2, // Ensure content stays above any decorative elements
+    maxWidth: "800px",
+    padding: "20px",
   },
   heroTitle: {
-    fontSize: "2.5rem",
+    fontSize: "3rem",
     fontWeight: "bold",
-    margin: "20px 0",
+    margin: "0 0 20px",
+    textShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
   },
   heroSubtitle: {
-    fontSize: "1.2rem",
-    margin: "10px 0 30px 0",
+    fontSize: "1.5rem",
+    margin: "0 0 30px",
+    color: "rgba(255, 255, 255, 0.9)",
+    textShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
   },
   heroButtons: {
     display: "flex",
-    gap: "20px",
+    justifyContent: "center",
+    gap: "15px",
   },
   ctaButton: {
-    padding: "10px 20px",
-    fontSize: "1rem",
-    backgroundColor: "white",
-    color: "#007bff",
+    padding: "15px 30px",
+    fontSize: "1.2rem",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    color: "#0061ff",
     border: "none",
-    borderRadius: "5px",
-    textDecoration: "none",
-    fontWeight: "bold",
+    borderRadius: "25px",
     cursor: "pointer",
-    transition: "background-color 0.3s ease",
+    fontWeight: "bold",
+    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+    transition: "transform 0.3s ease, background-color 0.3s ease",
+  },
+  ctaButtonHover: {
+    backgroundColor: "#ffffff",
+    transform: "scale(1.05)",
+  },
+
+  backgroundShapes: {
+    position: "absolute",
+    top: "-100px",
+    left: "-100px",
+    width: "300px",
+    height: "300px",
+    background: "rgba(255, 255, 255, 0.1)",
+    borderRadius: "50%",
+    zIndex: 1,
+    animation: "float 6s ease-in-out infinite",
   },
   featuresSection: {
     padding: "40px 20px",
@@ -220,7 +253,7 @@ const styles = {
     marginBottom: "15px",
   },
   techStackSection: {
-    padding: "60px 20px",
+    padding: "30px 10px",
     backgroundColor: "#f3f4f6",
     textAlign: "center",
   },
@@ -255,14 +288,14 @@ const styles = {
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
   },
   techStackIcon: {
-    width: "60px",
-    marginBottom: "15px",
+    width: "80px",
+    marginBottom: "10px",
   },
   techStackCardTitle: {
     fontSize: "1.3rem",
     fontWeight: "bold",
     marginBottom: "10px",
-    color: "#007bff",
+    // color: "#007bff",
   },
   techStackCardDescription: {
     fontSize: "1rem",

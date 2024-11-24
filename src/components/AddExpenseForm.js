@@ -63,7 +63,6 @@ function AddExpenseForm({ loggedInUserId }) {
     setLoading(true);
     setMessage(null);
 
-    console.log("Submitting with User ID:", loggedInUserId);
 
     if (!loggedInUserId) {
       setMessage("User ID is missing. Please log in again.");

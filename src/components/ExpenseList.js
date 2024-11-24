@@ -9,7 +9,7 @@ function ExpenseList({ loggedInUserId }) {
 
   useEffect(() => {
     if (!loggedInUserId) {
-      setMessage("User ID is missing. Please log in to view expenses.");
+      setMessage("Please log in to view expenses.");
       return;
     }
 

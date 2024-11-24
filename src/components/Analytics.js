@@ -33,7 +33,7 @@ function Analytics({ loggedInUserId }) {
 
   useEffect(() => {
     if (!loggedInUserId) {
-      setMessage("User ID is missing. Please log in to view analytics.");
+      setMessage("Please log in to view analytics.");
       return;
     }
 
