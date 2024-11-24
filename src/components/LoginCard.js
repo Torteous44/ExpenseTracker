@@ -49,7 +49,7 @@ function LoginCard({ onClose, onLogin, onSignUp }) {
       setMessage(isSigningUp ? "Account created successfully!" : "Login successful!");
 
       if (!isSigningUp) {
-        onLogin(result.user_id); // Pass user ID to the parent component
+        onLogin(result); // Pass user ID to the parent component
       }
 
       setTimeout(() => {

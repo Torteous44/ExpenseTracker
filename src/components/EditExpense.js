@@ -5,7 +5,6 @@ function EditExpense({ onUpdate }) {
   const location = useLocation();
   const expenseData = location.state?.expenseData;
 
-  // Initialize form data with default values or empty strings
   const [formData, setFormData] = useState({
     category: expenseData?.category || "",
     amount: expenseData?.amount || "",
@@ -41,8 +40,8 @@ function EditExpense({ onUpdate }) {
     setLoading(true);
     setMessage("");
 
-    if (!expenseData) {
-      setMessage("Unable to update: missing expense data.");
+    if (!expenseData?.expense_id) {
+      setMessage("Unable to update: missing expense ID.");
       setLoading(false);
       return;
     }
@@ -50,15 +49,16 @@ function EditExpense({ onUpdate }) {
     try {
       const form = new FormData();
       form.append("expense_id", expenseData.expense_id); // Required
-      form.append("category", formData.category); // Required
-      form.append("amount", formData.amount); // Required
-      form.append("description", formData.description); // Required
+      form.append("category", formData.category.name || expenseData.category.name); // Required
+      form.append("amount", formData.amount || expenseData.amount); // Required
+      form.append("description", formData.description || expenseData.description); // Required
 
+      // Optional fields
       if (formData.datetime) {
-        form.append("datetime", formData.datetime); // Optional
+        form.append("datetime", formData.datetime);
       }
       if (receipt) {
-        form.append("receipt", receipt); // Optional
+        form.append("receipt", receipt);
       }
 
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/editExpense`, {
@@ -67,9 +67,14 @@ function EditExpense({ onUpdate }) {
       });
 
       if (response.ok) {
-        const result = await response.text();
-        setMessage(result);
-        onUpdate();
+        const result = await response.json();
+        setMessage("Expense updated successfully!");
+        console.log("Updated Expense:", result);
+
+        // Optionally, call an onUpdate function or navigate back
+        if (onUpdate) {
+          onUpdate(result);
+        }
       } else {
         const errorText = await response.text();
         setMessage(`Error: ${errorText}`);
@@ -93,7 +98,7 @@ function EditExpense({ onUpdate }) {
             <input
               type="text"
               name="category"
-              value={formData.category}
+              value={formData.category.name}
               onChange={handleChange}
               required
             />

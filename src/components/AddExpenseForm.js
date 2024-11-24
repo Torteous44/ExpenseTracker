@@ -11,6 +11,36 @@ function AddExpenseForm({ loggedInUserId }) {
   const [loading, setLoading] = useState(false); // Loading state
   const [message, setMessage] = useState(null); // Success/error messages
 
+  const categories = [
+    "Groceries",
+    "Restaurants",
+    "Gas",
+    "Public Transit",
+    "Rent",
+    "Mortgage",
+    "Utilities",
+    "Doctor Visits",
+    "Medications",
+    "Health Insurance",
+    "Movies",
+    "Concerts",
+    "Clothing",
+    "Electronics",
+    "Flights",
+    "Hotels",
+    "Tuition",
+    "Books",
+    "Car Insurance",
+    "Home Insurance",
+    "Haircuts",
+    "Cosmetics",
+    "Credit Card Payment",
+    "Loan Payment",
+    "Savings Account Deposit",
+    "Charity Donations",
+    "Miscellaneous",
+  ];
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -52,11 +82,6 @@ function AddExpenseForm({ loggedInUserId }) {
         form.append("receipt", receipt);
       }
 
-      // Debug FormData
-      for (let [key, value] of form.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/addExpense`, {
         method: "POST",
         body: form,
@@ -90,13 +115,22 @@ function AddExpenseForm({ loggedInUserId }) {
       <form onSubmit={handleSubmit} style={styles.form}>
         <div style={styles.formGroup}>
           <label>Category:</label>
-          <input
-            type="text"
+          <select
             name="category"
             value={formData.category}
             onChange={handleChange}
             required
-          />
+            style={styles.dropdown}
+          >
+            <option value="" disabled>
+              Select a category
+            </option>
+            {categories.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
         </div>
         <div style={styles.formGroup}>
           <label>Amount:</label>
@@ -106,6 +140,7 @@ function AddExpenseForm({ loggedInUserId }) {
             value={formData.amount}
             onChange={handleChange}
             required
+            style={styles.input}
           />
         </div>
         <div style={styles.formGroup}>
@@ -116,6 +151,7 @@ function AddExpenseForm({ loggedInUserId }) {
             value={formData.datetime}
             onChange={handleChange}
             required
+            style={styles.input}
           />
         </div>
         <div style={styles.formGroup}>
@@ -126,6 +162,7 @@ function AddExpenseForm({ loggedInUserId }) {
             value={formData.description}
             onChange={handleChange}
             required
+            style={styles.input}
           />
         </div>
         <div style={styles.formGroup}>
@@ -156,6 +193,20 @@ const styles = {
   },
   formGroup: {
     marginBottom: "15px",
+  },
+  input: {
+    width: "100%",
+    padding: "10px",
+    fontSize: "14px",
+    borderRadius: "4px",
+    border: "1px solid #ddd",
+  },
+  dropdown: {
+    width: "100%",
+    padding: "10px",
+    fontSize: "14px",
+    borderRadius: "4px",
+    border: "1px solid #ddd",
   },
   submitButton: {
     padding: "10px",
