@@ -41,7 +41,7 @@ const HomePage = ({ user, toggleSignUp }) => {
             </div>
             <div style={styles.featureCard}>
               <img
-                src={`${process.env.PUBLIC_URL}/ExpenseTracker_group4/icons/organize.svg`}
+                src={`${process.env.PUBLIC_URL}/icons/organize.svg`}
                 alt="Organize Finances"
                 style={styles.featureIcon}
               />
