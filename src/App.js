@@ -41,7 +41,7 @@ function App() {
   };
 
   return (
-    <Router>
+    <Router basename="/ExpenseTracker_group4">
       <div>
         {/* Navigation Menu */}
         <NavigationMenu
