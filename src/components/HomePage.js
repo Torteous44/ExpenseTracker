@@ -30,7 +30,7 @@ const HomePage = ({ user, toggleSignUp }) => {
           <div style={styles.featuresGrid}>
             <div style={styles.featureCard}>
               <img
-                src="/icons/track.svg"
+                src={`${process.env.PUBLIC_URL}/icons/track.svg`}
                 alt="Track Expenses"
                 style={styles.featureIcon}
               />
@@ -41,7 +41,7 @@ const HomePage = ({ user, toggleSignUp }) => {
             </div>
             <div style={styles.featureCard}>
               <img
-                src="/icons/organize.svg"
+                src={`${process.env.PUBLIC_URL}/icons/organize.svg`}
                 alt="Organize Finances"
                 style={styles.featureIcon}
               />
@@ -52,7 +52,7 @@ const HomePage = ({ user, toggleSignUp }) => {
             </div>
             <div style={styles.featureCard}>
               <img
-                src="/icons/simplify.svg"
+                src={`${process.env.PUBLIC_URL}/icons/simplify.svg`}
                 alt="Simplify Budgeting"
                 style={styles.featureIcon}
               />
