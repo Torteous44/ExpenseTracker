@@ -3,37 +3,27 @@
   "name": "Cloud Final Expense Tracker",
   "icons": [
     {
-      "src": "icons/track.svg",
+      "src": "/icons/track.svg",
       "type": "image/svg+xml",
       "sizes": "any"
     },
     {
-      "src": "icons/organize.svg",
+      "src": "/icons/organize.svg",
       "type": "image/svg+xml",
       "sizes": "any"
     },
     {
-      "src": "icons/simplify.svg",
+      "src": "/icons/simplify.svg",
       "type": "image/svg+xml",
       "sizes": "any"
     },
     {
-      "src": "favicon.ico",
+      "src": "/favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#007bff",
   "background_color": "#ffffff"

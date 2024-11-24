@@ -29,11 +29,8 @@ const HomePage = ({ user, toggleSignUp }) => {
           <h2 style={styles.featuresTitle}>Features You'll Love</h2>
           <div style={styles.featuresGrid}>
             <div style={styles.featureCard}>
-              <img
-                src={`${process.env.PUBLIC_URL}/icons/track.svg`}
-                alt="Track Expenses"
-                style={styles.featureIcon}
-              />
+            <img src="/icons/track.svg" alt="Track Expenses" style={styles.featureIcon} />
+
               <h3 style={styles.featureTitle}>Track Your Expenses</h3>
               <p style={styles.featureDescription}>
                 Monitor all your spending in one place.
