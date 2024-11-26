@@ -3,7 +3,7 @@ services:
     name: expense-manager-frontend  # Replace with your service name
     runtime: node  # Use Node.js runtime for building the React app
     buildCommand: npm install && npm run build  # Build command for React
-    startCommand: npx serve -s build  # Serve the built React app statically
+    startCommand: npm run start  # Serve the built React app statically
 
     envVars:
       - key: REACT_APP_API_BASE_URL
