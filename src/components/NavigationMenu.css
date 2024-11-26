@@ -1,0 +1,229 @@
+/* General Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(0, 123, 255, 0.98); /* Semi-transparent blue */
+    backdrop-filter: blur(8px); /* Frosted glass effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.1s ease;
+  }
+  
+  .navbar:hover {
+    background: rgba(0, 123, 255, 1); /* Full blue on hover */
+  }
+  
+  .nav-content {
+    max-width: 1300px;
+    margin: 10 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 65px;
+    font-family: "VT323", monospace;
+    font-weight: 700;
+    font-style: bold;
+
+  }
+  
+  /* Logo */
+  .logo {
+    color: white;
+    text-decoration: none;
+    font-size: 28px;
+    font-family: "Pixelify Sans", serif;
+    font-optical-sizing: auto;
+    transition: all 0.25s ease-out;
+    
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .logo:hover {
+    color: #ffffff; /* Slightly lighter color on hover */
+    font-weight: 500;
+
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.4); /* Glow effect */
+    transform: translateX(-2px); /* Moves 2px to the left */
+
+  }
+  
+  /* Mobile Menu Toggle */
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .menu-toggle:hover {
+    transform: scale(1.1);
+    color: #dfe4ea; /* Lighter blue on hover */
+  }
+  
+  /* Navigation Links */
+  .nav-list {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    gap: 20px; /* Add spacing between links */
+    transition: all 0.3s ease;
+  }
+  
+  .nav-list.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9); /* Dark transparent background */
+    width: 100%;
+    padding: 20px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.3s ease-in-out;
+
+  }
+  
+  .nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+
+    padding: 9px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space for icons */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #dfe4ea;
+    border-radius: 5px;
+  }
+  
+  .nav-link .nav-icon {
+    font-size: 18px;
+  }
+  
+  /* Dropdown Menu */
+/* Dropdown Menu Styles */
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  list-style: none;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  padding: 15px 20px;
+  font-size: 16px;
+  color: #007bff;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.3s ease;
+  border-bottom: 5px solid #f0f0f0;
+  text-decoration: none;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+
+/* Apply dropdown-item style to buttons inside the dropdown */
+.dropdown-menu button.dropdown-item {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 15px 20px;
+  font-size: 13px;
+  color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Pixelify Sans", serif;
+  font-weight: bold;
+}
+
+
+
+  
+/* Sign-In/Sign-Out Button */
+.sign-in-button {
+  background-color: white;
+  color: #007bff;
+  border: solid;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 20px;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+  font-family: "VT323", monospace;
+  border-bottom: none ;
+}
+
+.sign-in-button:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  .logo{
+    font-size: 24px;
+  }
+  .nav-list {
+    display: none;
+
+  }
+
+  .nav-list.open {
+    display: flex;
+
+  }
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 0.5;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+}

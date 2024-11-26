@@ -1,0 +1,238 @@
+/* General Container */
+.container {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+/* Hero Section */
+.hero-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #0061ff, #60efff);
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    font-family: 'VT323', sans-serif;
+    perspective: 1000px;
+
+}
+
+.hero-content {
+    z-index: 1;
+    max-width: 800px;
+    padding: 20px;
+}
+
+.hero-title {
+    font-size: 3.7rem;
+    font-weight: bold;
+    margin: 0 0 20px;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+
+}
+
+.hero-subtitle {
+    font-size: 1.65rem;
+    margin: 0 0 30px;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    font-weight: 100;
+}
+
+.cta-button {
+    padding: 15px 30px;
+    font-size: 1.8rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #0061ff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    font-family: 'VT323', sans-serif;
+}
+
+.cta-button:hover {
+    background-color: #ffffff;
+    transform: scale(1.05);
+}
+
+/* Background Shapes */
+.background-shape {
+    position: absolute;
+    top: 200px;
+    left: 50px;
+    
+    filter: blur(1rem);
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+    animation: float 120s ease-in-out infinite;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.15) 40%,
+        rgba(255, 255, 255, 0.05) 80%,
+        transparent 100%
+    );    mix-blend-mode: overlay;
+    will-change: transform;
+}
+
+
+
+
+/* Features Section */
+.features-section {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.features-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    margin-top: 5px;
+}
+
+.features-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    width: 250px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.feature-icon {
+    width: 60px;
+    margin-bottom: 15px;
+}
+
+/* Tech Stack Section */
+.tech-stack-section {
+    padding: 30px 10px;
+    background-color: #f3f4f6;
+    text-align: center;
+}
+
+.tech-stack-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 25px;
+    margin-top: 5px;
+    color: #333;
+}
+
+.tech-stack-description {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.tech-stack-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.tech-stack-card {
+    width: 250px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tech-stack-icon {
+    width: 80px;
+    margin-bottom: 2px;
+    margin-top: 5px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+
+}
+.tech-stack-icon:hover{
+    transform: scale(1.04);
+}
+
+.tech-stack-card-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.tech-stack-card-description {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Footer */
+.footer {
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+}
+
+.footer-text {
+    font-size: 0.9rem;
+}
+
+/* Keyframe Animation */
+@keyframes float {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(0.8);
+        opacity: 0.7;
+    }
+    10% {
+        transform: translate(50px, -50px) rotate(30deg) scale(0.7);
+        opacity: 0.5;
+    }
+    25% {
+        transform: translate(-100px, 80px) rotate(60deg) scale(0.5);
+        opacity: 0.85;
+    }
+    40% {
+        transform: translate(120px, -100px) rotate(90deg) scale(0.7);
+        opacity: 0.8;
+    }
+    60% {
+        transform: translate(-150px, 120px) rotate(135deg) scale(0.8);
+        opacity: 0.75;
+    }
+    80% {
+        transform: translate(200px, -150px) rotate(180deg) scale(0.9);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg) scale(1);
+        opacity: 1;
+    }
+}
+
+
+

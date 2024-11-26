@@ -8,6 +8,7 @@ import Analytics from "./components/Analytics";
 import LoginCard from "./components/LoginCard";
 import SignUpCard from "./components/SignUpCard";
 import HomePage from "./components/HomePage";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -23,14 +24,14 @@ function App() {
   // Handle Login Event
   const handleLogin = (loggedInUser) => {
     console.log("Logged in user:", loggedInUser);
-    setUser(loggedInUser); // Expected structure: { username, user_id }
+    setUser(loggedInUser); // Expected structure: { username, user_id, email }
     setShowLogin(false);
   };
 
   // Handle Sign-Up Event
   const handleSignUp = (newUser) => {
     console.log("Signed up user:", newUser);
-    setUser(newUser); // Expected structure: { username, user_id }
+    setUser(newUser); // Expected structure: { username, user_id, email }
     setShowSignUp(false);
   };
 
@@ -90,6 +91,10 @@ function App() {
                   loggedInUserId={user?.user_id || null} // Pass user ID if logged in
                 />
               }
+            />
+            <Route
+              path="/profile"
+              element={<ProfilePage user={user} />} // Pass the user object to ProfilePage
             />
           </Routes>
         </div>

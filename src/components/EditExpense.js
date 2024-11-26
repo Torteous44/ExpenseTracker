@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import "./EditExpense.css"; // Import the CSS file
 
 function EditExpense({ onUpdate }) {
   const location = useLocation();
@@ -48,12 +49,11 @@ function EditExpense({ onUpdate }) {
 
     try {
       const form = new FormData();
-      form.append("expense_id", expenseData.expense_id); // Required
-      form.append("category", formData.category.name || expenseData.category.name); // Required
-      form.append("amount", formData.amount || expenseData.amount); // Required
-      form.append("description", formData.description || expenseData.description); // Required
+      form.append("expense_id", expenseData.expense_id);
+      form.append("category", formData.category.name || expenseData.category.name);
+      form.append("amount", formData.amount || expenseData.amount);
+      form.append("description", formData.description || expenseData.description);
 
-      // Optional fields
       if (formData.datetime) {
         form.append("datetime", formData.datetime);
       }
@@ -69,9 +69,7 @@ function EditExpense({ onUpdate }) {
       if (response.ok) {
         const result = await response.json();
         setMessage("Expense updated successfully!");
-        console.log("Updated Expense:", result);
 
-        // Optionally, call an onUpdate function or navigate back
         if (onUpdate) {
           onUpdate(result);
         }
@@ -88,22 +86,51 @@ function EditExpense({ onUpdate }) {
   };
 
   return (
-    <div style={styles.container}>
-      <h2>Edit Expense</h2>
-      {message && <p style={styles.message}>{message}</p>}
+    <div className="edit-expense-container">
+      <h2 className="edit-expense-title">Edit Expense</h2>
+      {message && <p className="edit-expense-message">{message}</p>}
       {expenseData && (
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.formGroup}>
-            <label>Category:</label>
-            <input
-              type="text"
-              name="category"
-              value={formData.category.name}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div style={styles.formGroup}>
+        <form onSubmit={handleSubmit} className="edit-expense-form">
+<div className="form-group">
+  <label>Category:</label>
+  <select
+    name="category"
+    value={formData.category}
+    onChange={handleChange}
+    required
+  >
+    <option value="" disabled>Select a category</option>
+    <option value="1">Groceries</option>
+    <option value="2">Restaurants</option>
+    <option value="3">Gas</option>
+    <option value="4">Public Transit</option>
+    <option value="5">Rent</option>
+    <option value="6">Mortgage</option>
+    <option value="7">Utilities</option>
+    <option value="8">Doctor Visits</option>
+    <option value="9">Medications</option>
+    <option value="10">Health Insurance</option>
+    <option value="11">Movies</option>
+    <option value="12">Concerts</option>
+    <option value="13">Clothing</option>
+    <option value="14">Electronics</option>
+    <option value="15">Flights</option>
+    <option value="16">Hotels</option>
+    <option value="17">Tuition</option>
+    <option value="18">Books</option>
+    <option value="19">Car Insurance</option>
+    <option value="20">Home Insurance</option>
+    <option value="21">Haircuts</option>
+    <option value="22">Cosmetics</option>
+    <option value="23">Credit Card Payment</option>
+    <option value="24">Loan Payment</option>
+    <option value="25">Savings Account Deposit</option>
+    <option value="26">Charity Donations</option>
+    <option value="27">Miscellaneous</option>
+  </select>
+</div>
+
+          <div className="form-group">
             <label>Amount:</label>
             <input
               type="number"
@@ -113,7 +140,7 @@ function EditExpense({ onUpdate }) {
               required
             />
           </div>
-          <div style={styles.formGroup}>
+          <div className="form-group">
             <label>Date & Time:</label>
             <input
               type="datetime-local"
@@ -122,7 +149,7 @@ function EditExpense({ onUpdate }) {
               onChange={handleChange}
             />
           </div>
-          <div style={styles.formGroup}>
+          <div className="form-group">
             <label>Description:</label>
             <input
               type="text"
@@ -132,11 +159,11 @@ function EditExpense({ onUpdate }) {
               required
             />
           </div>
-          <div style={styles.formGroup}>
+          <div className="form-group">
             <label>Receipt (Optional):</label>
             <input type="file" accept="image/*,application/pdf" onChange={handleFileChange} />
           </div>
-          <button type="submit" disabled={loading} style={styles.submitButton}>
+          <button type="submit" disabled={loading} className="submit-button">
             {loading ? "Updating..." : "Update"}
           </button>
         </form>
@@ -144,36 +171,5 @@ function EditExpense({ onUpdate }) {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "500px",
-    margin: "0 auto",
-    padding: "20px",
-    backgroundColor: "#f9f9f9",
-    borderRadius: "8px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  formGroup: {
-    marginBottom: "15px",
-  },
-  submitButton: {
-    padding: "10px",
-    backgroundColor: "#007bff",
-    color: "#fff",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-  },
-  message: {
-    marginTop: "15px",
-    textAlign: "center",
-    color: "red",
-  },
-};
 
 export default EditExpense;

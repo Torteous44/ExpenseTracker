@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./AddExpenseForm.css"; // Create and import the CSS file
 
 function AddExpenseForm({ loggedInUserId }) {
   const [formData, setFormData] = useState({
@@ -7,9 +8,9 @@ function AddExpenseForm({ loggedInUserId }) {
     datetime: "",
     description: "",
   });
-  const [receipt, setReceipt] = useState(null); // For file uploads
-  const [loading, setLoading] = useState(false); // Loading state
-  const [message, setMessage] = useState(null); // Success/error messages
+  const [receipt, setReceipt] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
 
   const categories = [
     "Groceries",
@@ -48,31 +49,28 @@ function AddExpenseForm({ loggedInUserId }) {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    // Validate file type
     if (file && !["image/jpeg", "image/png", "application/pdf"].includes(file.type)) {
       setMessage("Invalid file type. Only JPEG, PNG, and PDF files are allowed.");
       setReceipt(null);
       return;
     }
-    setMessage(null); // Clear error if file is valid
+    setMessage(null);
     setReceipt(file);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage(null);
-
-
+  
     if (!loggedInUserId) {
       setMessage("User ID is missing. Please log in again.");
       setLoading(false);
       return;
     }
-
+  
     try {
       const form = new FormData();
-      form.append("user_id", loggedInUserId); // Add user_id to FormData
+      form.append("user_id", loggedInUserId);
       form.append("category", formData.category);
       form.append("amount", formData.amount);
       form.append("datetime", formData.datetime);
@@ -80,15 +78,15 @@ function AddExpenseForm({ loggedInUserId }) {
       if (receipt) {
         form.append("receipt", receipt);
       }
-
+  
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/addExpense`, {
         method: "POST",
         body: form,
       });
-
+  
       if (response.ok) {
-        const result = await response.text();
-        setMessage(result);
+        await response.text(); // Read and discard if unused
+        setMessage("Expense added successfully!");
         setFormData({
           category: "",
           amount: "",
@@ -107,19 +105,20 @@ function AddExpenseForm({ loggedInUserId }) {
       setLoading(false);
     }
   };
+  
 
   return (
-    <div style={styles.container}>
-      <h2>Add Expense</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div style={styles.formGroup}>
-          <label>Category:</label>
+    <div className="form-container">
+      <h2 className="form-title">Add Expense</h2>
+      <form onSubmit={handleSubmit} className="expense-form">
+        <div className="form-group">
+          <label className="form-label">Category:</label>
           <select
             name="category"
             value={formData.category}
             onChange={handleChange}
             required
-            style={styles.dropdown}
+            className="form-dropdown"
           >
             <option value="" disabled>
               Select a category
@@ -131,94 +130,57 @@ function AddExpenseForm({ loggedInUserId }) {
             ))}
           </select>
         </div>
-        <div style={styles.formGroup}>
-          <label>Amount:</label>
+        <div className="form-group">
+          <label className="form-label">Amount:</label>
           <input
             type="number"
             name="amount"
             value={formData.amount}
             onChange={handleChange}
             required
-            style={styles.input}
+            className="form-input"
+            placeholder="Enter amount"
           />
         </div>
-        <div style={styles.formGroup}>
-          <label>Date & Time:</label>
+        <div className="form-group">
+          <label className="form-label">Date & Time:</label>
           <input
             type="datetime-local"
             name="datetime"
             value={formData.datetime}
             onChange={handleChange}
             required
-            style={styles.input}
+            className="form-input"
           />
         </div>
-        <div style={styles.formGroup}>
-          <label>Description:</label>
+        <div className="form-group">
+          <label className="form-label">Description:</label>
           <input
             type="text"
             name="description"
             value={formData.description}
             onChange={handleChange}
             required
-            style={styles.input}
+            className="form-input"
+            placeholder="Enter description"
           />
         </div>
-        <div style={styles.formGroup}>
-          <label>Receipt (Optional):</label>
-          <input type="file" accept="image/*,application/pdf" onChange={handleFileChange} />
+        <div className="form-group">
+          <label className="form-label">Receipt (Optional):</label>
+          <input
+            type="file"
+            accept="image/*,application/pdf"
+            onChange={handleFileChange}
+            className="form-file-input"
+          />
         </div>
-        <button type="submit" disabled={loading} style={styles.submitButton}>
+        <button type="submit" disabled={loading} className="form-submit-button">
           {loading ? "Submitting..." : "Submit"}
         </button>
       </form>
-      {message && <p style={styles.message}>{message}</p>}
+      {message && <p className="form-message">{message}</p>}
     </div>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: "500px",
-    margin: "0 auto",
-    padding: "20px",
-    backgroundColor: "#f9f9f9",
-    borderRadius: "8px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  formGroup: {
-    marginBottom: "15px",
-  },
-  input: {
-    width: "100%",
-    padding: "10px",
-    fontSize: "14px",
-    borderRadius: "4px",
-    border: "1px solid #ddd",
-  },
-  dropdown: {
-    width: "100%",
-    padding: "10px",
-    fontSize: "14px",
-    borderRadius: "4px",
-    border: "1px solid #ddd",
-  },
-  submitButton: {
-    padding: "10px",
-    backgroundColor: "#007bff",
-    color: "#fff",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-  },
-  message: {
-    marginTop: "15px",
-    textAlign: "center",
-  },
-};
 
 export default AddExpenseForm;
