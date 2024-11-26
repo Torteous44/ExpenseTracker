@@ -1,0 +1,10 @@
+services:
+  - type: web  # Define the service as a web application
+    name: expense-manager-frontend  # Replace with the desired name for your service
+    staticPublishPath: build/  # The directory to publish, created after building the app
+    buildCommand: npm install && npm run build  # Install dependencies and build the app
+    branch: main  # Branch to deploy (replace with your default branch if not 'main')
+    envVars:
+      - key: REACT_APP_API_BASE_URL
+        value: https://expensemanager4.azurewebsites.net
+
