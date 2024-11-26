@@ -112,3 +112,9 @@ h1 {
     display: none;
   }
 }
+/* Global CSS File */
+body {
+  -webkit-font-smoothing: antialiased; /* Chrome, Safari */
+  -moz-osx-font-smoothing: grayscale; /* Firefox on macOS */
+  font-smooth: always; /* Additional fallback */
+}
