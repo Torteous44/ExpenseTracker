@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./styles/LoginCard.css";
 
 function LoginCard({ onClose, onLogin, onSignUp }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -64,129 +65,85 @@ function LoginCard({ onClose, onLogin, onSignUp }) {
   };
 
   return (
-    <div style={styles.overlay}>
-      <div style={styles.card}>
-        <h2>{isSigningUp ? "Sign Up" : "Log In"}</h2>
-        <form onSubmit={handleSubmit}>
-          {isSigningUp && (
-            <div style={styles.formGroup}>
-              <label>Username:</label>
-              <input
-                type="text"
-                name="username"
-                value={formData.username || ""}
-                onChange={handleChange}
-                required={isSigningUp}
-                style={styles.input}
-              />
-            </div>
-          )}
-          <div style={styles.formGroup}>
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-          </div>
-          <div style={styles.formGroup}>
-            <label>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              style={styles.input}
-            />
-          </div>
-          <button type="submit" style={styles.button} disabled={loading}>
-            {loading ? (isSigningUp ? "Signing Up..." : "Logging In...") : isSigningUp ? "Sign Up" : "Log In"}
-          </button>
-        </form>
-        <p style={styles.switchText}>
-          {isSigningUp ? "Already have an account? " : "No account? "}
-          <span onClick={toggleSignUp} style={styles.switchLink}>
-            {isSigningUp ? "Log In" : "Sign Up"}
-          </span>
-        </p>
-        <button onClick={onClose} style={styles.closeButton}>
-          ×
-        </button>
-        {message && <p style={styles.message}>{message}</p>}
+<div className="login-card-overlay">
+  <div className="login-card">
+    <h2>{isSigningUp ? "Sign Up" : "Log In"}</h2>
+    <form onSubmit={handleSubmit}>
+      {isSigningUp && (
+        <div className="login-card-form-group">
+          <label>Username:</label>
+          <input
+            type="text"
+            name="username"
+            value={formData.username || ""}
+            onChange={handleChange}
+            required={isSigningUp}
+            className="login-card-input"
+          />
+        </div>
+      )}
+      <div className="login-card-form-group">
+        <label>Email:</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+          className="login-card-input"
+        />
       </div>
-    </div>
+      <div className="login-card-form-group">
+        <label>Password:</label>
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+          className="login-card-input"
+        />
+      </div>
+      <button
+        type="submit"
+        className="login-card-button"
+        disabled={loading}
+      >
+        {loading
+          ? isSigningUp
+            ? "Signing Up..."
+            : "Logging In..."
+          : isSigningUp
+          ? "Sign Up"
+          : "Log In"}
+      </button>
+    </form>
+    <p className="login-card-switch-text">
+      {isSigningUp ? "Already have an account? " : "No account? "}
+      <span onClick={toggleSignUp} className="login-card-switch-link">
+        {isSigningUp ? "Log In" : "Sign Up"}
+      </span>
+    </p>
+    <button onClick={onClose} className="login-card-close-button">
+      ×
+    </button>
+    {message && (
+      <p
+        className={`login-card-message ${
+          message.includes("successfully")
+            ? "login-card-message-success"
+            : ""
+        }`}
+      >
+        {message}
+      </p>
+    )}
+  </div>
+</div>
+
   );
 }
 
-const styles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000,
-  },
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: "8px",
-    padding: "20px",
-    width: "300px",
-    textAlign: "center",
-    position: "relative",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  },
-  formGroup: {
-    marginBottom: "15px",
-  },
-  input: {
-    width: "90%",
-    padding: "10px",
-    fontSize: "14px",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
-  },
-  button: {
-    backgroundColor: "#007bff",
-    color: "#fff",
-    padding: "10px 15px",
-    fontSize: "16px",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    width: "100%",
-  },
-  switchText: {
-    marginTop: "10px",
-    fontSize: "14px",
-  },
-  switchLink: {
-    color: "#007bff",
-    cursor: "pointer",
-    textDecoration: "underline",
-  },
-  closeButton: {
-    position: "absolute",
-    top: "10px",
-    right: "10px",
-    backgroundColor: "transparent",
-    border: "none",
-    fontSize: "20px",
-    cursor: "pointer",
-  },
-  message: {
-    marginTop: "10px",
-    fontSize: "14px",
-    color: "red",
-  },
-};
+
 
 export default LoginCard;

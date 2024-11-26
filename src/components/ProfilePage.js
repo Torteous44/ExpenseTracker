@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ProfilePage.css";
+import "./styles/ProfilePage.css";
 
 const ProfilePage = ({ user }) => {
   const [editMode, setEditMode] = useState(false);

@@ -112,9 +112,9 @@
   .nav-link .nav-icon {
     font-size: 18px;
   }
-  
-  /* Dropdown Menu */
-/* Dropdown Menu Styles */
+
+
+/* Dropdown Menu */
 .dropdown-container {
   position: relative;
 }
@@ -132,6 +132,7 @@
   z-index: 1000;
 }
 
+/* Shared Styles for Links and Buttons */
 .dropdown-item {
   padding: 15px 20px;
   font-size: 16px;
@@ -139,31 +140,43 @@
   cursor: pointer;
   text-align: left;
   transition: background-color 0.3s ease;
-  border-bottom: 5px solid #f0f0f0;
   text-decoration: none;
+  display: block; /* Ensure consistent block layout */
+  font-family: "Pixelify Sans", serif;
+  font-weight: bold;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  color: #0056b3; /* Slightly darker blue for hover */
 }
 
 .dropdown-item:last-child {
   border-bottom: none;
 }
 
-
-/* Apply dropdown-item style to buttons inside the dropdown */
+/* Button-Specific Reset for Dropdown */
 .dropdown-menu button.dropdown-item {
-  width: 100%;
   background: none;
   border: none;
-  text-align: left;
+  outline: none;
   padding: 15px 20px;
-  font-size: 13px;
+  font-size: 16px;
   color: #007bff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
   font-family: "Pixelify Sans", serif;
   font-weight: bold;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 100%;
+  display: block;
 }
 
-
+.dropdown-menu button.dropdown-item:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  color: #0056b3; /* Ensure hover color matches */
+}
 
   
 /* Sign-In/Sign-Out Button */

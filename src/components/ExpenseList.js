@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./ExpenseList.css";
+import "./styles/ExpenseList.css";
 import useWindowWidth from "../hooks/useWindowWidth"; // Import the custom hook
+import Spinner from "../components/Spinner"; // Import the Spinner component
 
 function ExpenseList({ loggedInUserId }) {
   const [expenses, setExpenses] = useState([]);
@@ -99,7 +100,7 @@ function ExpenseList({ loggedInUserId }) {
     <div className="expense-list-container">
       <h2 className="expense-list-title">Expense Tracker</h2>
       {message && <p className="message">{message}</p>}
-      {loading && <p className="loading">Loading expenses...</p>}
+      {loading && <div className="spinner-container"><Spinner /></div>}
       {!loading && expenses.length > 0 && (
         <>
           <div className="filters">

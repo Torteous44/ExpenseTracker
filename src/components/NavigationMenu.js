@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./NavigationMenu.css";
+import "./styles/NavigationMenu.css";
 
 function NavigationMenu({ toggleLogin, toggleSignUp, user, onLogout }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -67,25 +67,30 @@ function NavigationMenu({ toggleLogin, toggleSignUp, user, onLogout }) {
               {user ? `Hello, ${user}` : "Sign In / Sign Up"}
             </button>
             {dropdownOpen && user && (
-              <ul className="dropdown-menu">
-                <li>
-                  <Link to="/profile" className="dropdown-item" onClick={closeMobileMenu}>
-                    View Profile
-                  </Link>
-                </li>
-                <li>
-                  <button
-                    className="dropdown-item"
-                    onClick={() => {
-                      onLogout();
-                      closeMobileMenu();
-                    }}
-                  >
-                    Sign Out
-                  </button>
-                </li>
-              </ul>
-            )}
+  <ul className="dropdown-menu">
+    <li>
+      <Link
+        to="/profile"
+        className="dropdown-item"
+        onClick={closeMobileMenu}
+      >
+        View Profile
+      </Link>
+    </li>
+    <li>
+      <button
+        className="dropdown-item"
+        onClick={() => {
+          onLogout();
+          closeMobileMenu();
+        }}
+      >
+        Sign Out
+      </button>
+    </li>
+  </ul>
+)}
+
           </li>
         </ul>
       </div>

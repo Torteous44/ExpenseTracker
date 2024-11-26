@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./AddExpenseForm.css"; // Create and import the CSS file
+import "./styles/AddExpenseForm.css"; // Create and import the CSS file
 
 function AddExpenseForm({ loggedInUserId }) {
   const [formData, setFormData] = useState({

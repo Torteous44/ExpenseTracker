@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import NavigationMenu from "./components/NavigationMenu";
 import AddExpenseForm from "./components/AddExpenseForm";
 import ExpenseList from "./components/ExpenseList";
@@ -10,97 +10,107 @@ import SignUpCard from "./components/SignUpCard";
 import HomePage from "./components/HomePage";
 import ProfilePage from "./components/ProfilePage";
 
+function ProtectedRoute({ user, children }) {
+  if (!user) {
+    return <Navigate to="/" />;
+  }
+  return children;
+}
+
 function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [user, setUser] = useState(null);
 
-  // Toggle Login Modal
-  const toggleLogin = () => setShowLogin((prev) => !prev);
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
 
-  // Toggle SignUp Modal
+  const toggleLogin = () => setShowLogin((prev) => !prev);
   const toggleSignUp = () => setShowSignUp((prev) => !prev);
 
-  // Handle Login Event
   const handleLogin = (loggedInUser) => {
-    console.log("Logged in user:", loggedInUser);
-    setUser(loggedInUser); // Expected structure: { username, user_id, email }
+    setUser(loggedInUser);
     setShowLogin(false);
+    localStorage.setItem("user", JSON.stringify(loggedInUser));
   };
 
-  // Handle Sign-Up Event
   const handleSignUp = (newUser) => {
-    console.log("Signed up user:", newUser);
-    setUser(newUser); // Expected structure: { username, user_id, email }
+    setUser(newUser);
     setShowSignUp(false);
+    localStorage.setItem("user", JSON.stringify(newUser));
   };
 
-  // Handle Logout Event
   const handleLogout = () => {
-    console.log("User logged out.");
     setUser(null);
+    localStorage.removeItem("user");
   };
 
   return (
     <Router basename="/ExpenseTracker_group4">
       <div>
-        {/* Navigation Menu */}
         <NavigationMenu
-          user={user?.username || null} // Pass only the username
+          user={user?.username || null}
           toggleLogin={toggleLogin}
           onLogout={handleLogout}
           toggleSignUp={toggleSignUp}
         />
 
         <div style={{ paddingTop: "50px" }}>
-          {/* Routes */}
           <Routes>
             <Route
               path="/"
-              element={
-                <HomePage
-                  user={user}
-                  toggleSignUp={toggleSignUp} // Pass sign-up toggle to open modal
-                />
-              }
+              element={<HomePage user={user} toggleSignUp={toggleSignUp} />}
             />
             <Route
               path="/add-expense"
               element={
-                <AddExpenseForm
-                  loggedInUserId={user?.user_id || null} // Pass user ID if logged in
-                />
+                <ProtectedRoute user={user}>
+                  <AddExpenseForm loggedInUserId={user?.user_id} />
+                </ProtectedRoute>
               }
             />
             <Route
               path="/view-expenses"
               element={
-                <ExpenseList
-                  loggedInUserId={user?.user_id || null} // Pass user ID if logged in
-                />
+                <ProtectedRoute user={user}>
+                  <ExpenseList loggedInUserId={user?.user_id} />
+                </ProtectedRoute>
               }
             />
             <Route
               path="/expenses/:id"
-              element={<EditExpense />} // Edit Expense expects state to be passed with expense data
+              element={
+                <ProtectedRoute user={user}>
+                  <EditExpense />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/reports"
               element={
-                <Analytics
-                  loggedInUserId={user?.user_id || null} // Pass user ID if logged in
-                />
+                <ProtectedRoute user={user}>
+                  <Analytics loggedInUserId={user?.user_id} />
+                </ProtectedRoute>
               }
             />
             <Route
               path="/profile"
-              element={<ProfilePage user={user} />} // Pass the user object to ProfilePage
+              element={<ProfilePage user={user} />}
             />
           </Routes>
         </div>
 
-        {/* Modals */}
-        {showLogin && <LoginCard onClose={toggleLogin} onLogin={handleLogin} />}
+              {showLogin && (
+        <LoginCard
+          onClose={() => setShowLogin(false)} // Explicitly close the modal
+          onLogin={handleLogin}
+        />
+      )}
+
         {showSignUp && <SignUpCard onClose={toggleSignUp} onSignUp={handleSignUp} />}
       </div>
     </Router>

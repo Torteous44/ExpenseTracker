@@ -11,6 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar, Pie, Line } from "react-chartjs-2";
+import "./styles/Analytics.css"
 
 ChartJS.register(
   CategoryScale,
@@ -178,96 +179,43 @@ function Analytics({ loggedInUserId }) {
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>Expense Analytics</h2>
-      {message && <p style={styles.message}>{message}</p>}
-      {loading && <p style={styles.loading}>Loading analytics...</p>}
+    <div className="analytics-container">
+      <h2 className="analytics-title">Expense Analytics</h2>
+      {message && <p className="message">{message}</p>}
+      {loading && (
+        <div className="loading-spinner">
+          <div className="spinner"></div>
+        </div>
+      )}
       {!loading && Object.keys(categoryTotals).length > 0 && (
-        <div style={styles.chartWrapper}>
-          <div style={styles.chartContainer}>
-            <h3 style={styles.chartTitle}>Total Amount by Category (Bar Chart)</h3>
-            <div style={styles.chart}>
+        <div className="chart-wrapper">
+          <div className="chart-container">
+            <h3 className="chart-title">Total Amount by Category (Bar Chart)</h3>
+            <div className="chart">
               <Bar data={barData} options={chartOptions} />
             </div>
           </div>
-          <div style={styles.chartContainer}>
-            <h3 style={styles.chartTitle}>Expense Distribution (Pie Chart)</h3>
-            <div style={styles.chart}>
+          <div className="chart-container">
+            <h3 className="chart-title">Expense Distribution (Pie Chart)</h3>
+            <div className="chart">
               <Pie data={pieData} options={chartOptions} />
             </div>
           </div>
-          <div style={styles.chartContainer}>
-            <h3 style={styles.chartTitle}>Total Expenses Over Time (Line Chart)</h3>
-            <div style={styles.chart}>
+          <div className="chart-container">
+            <h3 className="chart-title">Total Expenses Over Time (Line Chart)</h3>
+            <div className="chart">
               <Line data={lineData} options={chartOptions} />
             </div>
           </div>
         </div>
       )}
       {!loading && Object.keys(categoryTotals).length === 0 && (
-        <p style={styles.noData}>No expense data available for analytics.</p>
+        <p className="no-data">No expense data available for analytics.</p>
       )}
     </div>
   );
+  
 }
 
-const styles = {
-  container: {
-    maxWidth: "900px",
-    margin: "20px auto",
-    padding: "20px",
-    backgroundColor: "#f4f4f4",
-    borderRadius: "8px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    fontFamily: "'Arial', sans-serif",
-  },
-  title: {
-    textAlign: "center",
-    fontSize: "24px",
-    color: "#333",
-    marginBottom: "20px",
-  },
-  chartWrapper: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: "20px",
-    justifyContent: "center",
-  },
-  chartContainer: {
-    flex: "1 1 calc(50% - 20px)",
-    maxWidth: "45%",
-    height: "400px",
-    padding: "20px",
-    backgroundColor: "#fff",
-    borderRadius: "10px",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    textAlign: "center",
-  },
-  chart: {
-    width: "100%",
-    height: "350px",
-  },
-  chartTitle: {
-    fontSize: "18px",
-    marginBottom: "15px",
-    color: "#555",
-  },
-  loading: {
-    textAlign: "center",
-    color: "#007bff",
-    fontWeight: "bold",
-  },
-  message: {
-    color: "red",
-    textAlign: "center",
-    marginBottom: "15px",
-  },
-  noData: {
-    textAlign: "center",
-    color: "#555",
-    fontSize: "18px",
-  },
-};
 
 export default Analytics;

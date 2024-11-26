@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./styles/SignUpCard.css";
 
 function SignUpCard({ onClose, onSignUp }) {
   const [formData, setFormData] = useState({
@@ -46,11 +47,11 @@ function SignUpCard({ onClose, onSignUp }) {
   };
 
   return (
-    <div style={styles.overlay}>
-      <div style={styles.card}>
+    <div className="signup-card-overlay">
+      <div className="signup-card">
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit}>
-          <div style={styles.formGroup}>
+          <div className="signup-card-form-group">
             <label>Username:</label>
             <input
               type="text"
@@ -58,10 +59,10 @@ function SignUpCard({ onClose, onSignUp }) {
               value={formData.username}
               onChange={handleChange}
               required
-              style={styles.input}
+              className="signup-card-input"
             />
           </div>
-          <div style={styles.formGroup}>
+          <div className="signup-card-form-group">
             <label>Email:</label>
             <input
               type="email"
@@ -69,10 +70,10 @@ function SignUpCard({ onClose, onSignUp }) {
               value={formData.email}
               onChange={handleChange}
               required
-              style={styles.input}
+              className="signup-card-input"
             />
           </div>
-          <div style={styles.formGroup}>
+          <div className="signup-card-form-group">
             <label>Password:</label>
             <input
               type="password"
@@ -80,78 +81,24 @@ function SignUpCard({ onClose, onSignUp }) {
               value={formData.password}
               onChange={handleChange}
               required
-              style={styles.input}
+              className="signup-card-input"
             />
           </div>
-          <button type="submit" disabled={loading} style={styles.button}>
+          <button
+            type="submit"
+            disabled={loading}
+            className="signup-card-button"
+          >
             {loading ? "Signing up..." : "Sign Up"}
           </button>
         </form>
-        {message && <p style={styles.message}>{message}</p>}
-        <button onClick={onClose} style={styles.closeButton}>
+        {message && <p className="signup-card-message">{message}</p>}
+        <button onClick={onClose} className="signup-card-close-button">
           ×
         </button>
       </div>
     </div>
   );
 }
-
-const styles = {
-  overlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000,
-  },
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: "8px",
-    padding: "20px",
-    width: "300px",
-    textAlign: "center",
-    position: "relative",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-  },
-  formGroup: {
-    marginBottom: "15px",
-  },
-  input: {
-    width: "90%",
-    padding: "10px",
-    fontSize: "14px",
-    borderRadius: "4px",
-    border: "1px solid #ccc",
-  },
-  button: {
-    backgroundColor: "#007bff",
-    color: "#fff",
-    padding: "10px 15px",
-    fontSize: "16px",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    width: "100%",
-  },
-  closeButton: {
-    position: "absolute",
-    top: "10px",
-    right: "10px",
-    backgroundColor: "transparent",
-    border: "none",
-    fontSize: "20px",
-    cursor: "pointer",
-  },
-  message: {
-    marginTop: "10px",
-    fontSize: "14px",
-    color: "red",
-  },
-};
 
 export default SignUpCard;

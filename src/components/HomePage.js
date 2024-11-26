@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./HomePage.css"; // Import the CSS file
+import "./styles/HomePage.css"; // Import the CSS file
 
 const HomePage = ({ user, toggleSignUp }) => {
   return (
