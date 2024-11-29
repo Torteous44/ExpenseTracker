@@ -139,3 +139,6 @@
 .link-button:hover {
   color: #005ce6;
 }
+.signup-card-message {
+  font-family: 'Pixelify sans', serif;
+}

@@ -43,6 +43,7 @@
 .inputGroup input:focus + label,
 .inputGroup input:not(:placeholder-shown):focus + label {
     border-color: rgb(255, 255, 255);
+
 }
 
 .inputGroup input:focus {
@@ -154,3 +155,6 @@
     font-family: 'Pixelify sans', serif;
 }
 
+.message {
+    font-family: 'Pixelify sans', serif;
+}

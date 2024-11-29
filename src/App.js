@@ -50,7 +50,7 @@ function App() {
   };
 
   return (
-    <Router basename="/ExpenseTracker_group4">
+    <Router basename="/ExpenseTracker">
       <div>
         <NavigationMenu
           user={user?.username || null}
