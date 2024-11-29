@@ -66,49 +66,48 @@ function LoginCard({ onClose, onLogin, onSignUp }) {
 
   return (
 <div className="login-card-overlay">
-  <div className="login-card">
-    <h2>{isSigningUp ? "Sign Up" : "Log In"}</h2>
-    <form onSubmit={handleSubmit}>
+  <div className="form-box">
+    <button onClick={onClose} className="close-btn">
+      ×
+    </button>
+    <h2 className="title">{isSigningUp ? "Sign Up" : "Log In"}</h2>
+    <form onSubmit={handleSubmit} className="form">
       {isSigningUp && (
-        <div className="login-card-form-group">
-          <label>Username:</label>
+        <div className="inputGroup">
           <input
             type="text"
             name="username"
             value={formData.username || ""}
             onChange={handleChange}
-            required={isSigningUp}
-            className="login-card-input"
+            placeholder=""
           />
+          <label>Username</label>
         </div>
       )}
-      <div className="login-card-form-group">
-        <label>Email:</label>
+      <div className="inputGroup">
         <input
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
+          placeholder=" " 
+
           required
-          className="login-card-input"
         />
+        <label>Email</label>
       </div>
-      <div className="login-card-form-group">
-        <label>Password:</label>
+      <div className="inputGroup">
         <input
           type="password"
           name="password"
           value={formData.password}
           onChange={handleChange}
+          placeholder= " "
           required
-          className="login-card-input"
         />
+        <label>Password</label>
       </div>
-      <button
-        type="submit"
-        className="login-card-button"
-        disabled={loading}
-      >
+      <button type="submit" className="btn-submit" disabled={loading}>
         {loading
           ? isSigningUp
             ? "Signing Up..."
@@ -117,33 +116,32 @@ function LoginCard({ onClose, onLogin, onSignUp }) {
           ? "Sign Up"
           : "Log In"}
       </button>
-    </form>
-    <p className="login-card-switch-text">
-      {isSigningUp ? "Already have an account? " : "No account? "}
-      <span onClick={toggleSignUp} className="login-card-switch-link">
-        {isSigningUp ? "Log In" : "Sign Up"}
-      </span>
-    </p>
-    <button onClick={onClose} className="login-card-close-button">
-      ×
-    </button>
-    {message && (
-      <p
-        className={`login-card-message ${
-          message.includes("successfully")
-            ? "login-card-message-success"
-            : ""
-        }`}
-      >
-        {message}
-      </p>
-    )}
+</form>
+<p className="form-section switch-account-section">
+  {isSigningUp ? "Already have an account? " : "No account? "}
+  <button
+    type="button"
+    className="link-button toggle-account-button"
+    onClick={toggleSignUp}
+  >
+    {isSigningUp ? "Log In" : "Sign Up"}
+  </button>
+</p>
+
+{message && (
+  <p
+    className={`message feedback-message ${
+      message.includes("successfully") ? "message-success" : ""
+    }`}
+  >
+    {message}
+  </p>
+)}
+
   </div>
 </div>
 
   );
 }
-
-
 
 export default LoginCard;
