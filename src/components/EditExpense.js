@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import "./styles/EditExpense.css"; // Import the CSS file
+import "./styles/EditExpense.css"; 
 
 function EditExpense({ onUpdate }) {
   const location = useLocation();

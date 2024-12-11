@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./styles/HomePage.css"; // Import the CSS file
+import "./styles/HomePage.css"; 
 
 const HomePage = ({ user, toggleSignUp }) => {
   return (
@@ -11,7 +11,7 @@ const HomePage = ({ user, toggleSignUp }) => {
 
       {/* Hero Section */}
       <section className="hero-section">
-        <div className="hero-background"></div> {/* Optional decorative background */}
+        <div className="hero-background"></div>
         <div className="hero-content">
           <h1 className="hero-title">Effortlessly Manage Your Expenses</h1>
           <p className="hero-subtitle">
@@ -149,7 +149,7 @@ const HomePage = ({ user, toggleSignUp }) => {
       {/* Footer */}
       <footer className="footer">
         <p className="footer-text">
-          Expense Manager | Cloud Final Project | Matthew Porteous, Boris Gans, Georgios Klonis, Nikoloz Kipiani, Fares Qadoumi
+          Expense Manager | Cloud Final Project | Matthew Porteous, Boris Gans, Georgios Klonis, Nikoloz Kipiani, David Ezerzer, Fares
         </p>
       </footer>
     </div>

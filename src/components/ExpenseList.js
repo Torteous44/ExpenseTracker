@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./styles/ExpenseList.css";
-import useWindowWidth from "../hooks/useWindowWidth"; // Import the custom hook
-import Spinner from "../components/Spinner"; // Import the Spinner component
+import useWindowWidth from "../hooks/useWindowWidth";
+import Spinner from "../components/Spinner"; 
 
 function ExpenseList({ loggedInUserId }) {
   const [expenses, setExpenses] = useState([]);
